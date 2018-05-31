@@ -22,7 +22,7 @@ Now, when you want to use this image, you can simply enter kong-ee.
 
 Because we are using Kong EE, we will also need to use a license file. You should already have access to this file, but if not, please contact JPK. We will set the license as an environmental variable to avoid using it in our commands. To do this, run the following command:
 ```
-export KONG_LICENSE_DATA='<licenseDataHere>
+export KONG_LICENSE_DATA='<licenseDataHere>'
 ```
 
 Now, we can use $KONG_LICENSE_DATA instead of the actual value. 
