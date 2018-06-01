@@ -24,6 +24,7 @@ Because we are using Kong EE, we will also need to use a license file. You shoul
 ```
 export KONG_LICENSE_DATA='<licenseDataHere>'
 ```
+Note if your license has a special charcter like a ' you will need to escape it out with \ 
 
 Now, we can use $KONG_LICENSE_DATA instead of the actual value. 
 
