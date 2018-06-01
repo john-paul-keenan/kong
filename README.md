@@ -13,22 +13,27 @@
 ## Getting Started
 Now, we have everything we need to follow along with the demo. We'll do theis part as a group, but first, we'll need to get the datastopre up and running. We'll be using Postgres in this example but could just as easily use Cassandra
 
-```docker run -d --name kong-database \
+```
+docker run -d --name kong-database \
               -p 5432:5432 \
               -e "POSTGRES_USER=kong" \
               -e "POSTGRES_DB=kong" \
-              postgres:9.6```
+              postgres:9.6 
+```
 
 Now that we have a daatastore up and ready, we need to run migrations on it. Migrations must be run when you start a fresh instance of Kong, or upgrade versions. Migrations should only be run from a single node
-```docker run --rm --name kong \
+```
+docker run --rm --name kong \
     --link kong-database:kong-database \
     -e "KONG_LICENSE_DATA=$KONG_LICENSE_DATA" \
     -e "KONG_DATABASE=postgres" \
     -e "KONG_PG_HOST=kong-database" \
-    kong-ee kong migrations up```
+    kong-ee kong migrations up
+```
 
 Now that the datastore is ready, let';s start our first instance of Kong
-```docker run -d --name kong \
+```
+docker run -d --name kong \
     --link kong-database:kong-database \
     -e "KONG_LICENSE_DATA=$KONG_LICENSE_DATA" \
     -e "KONG_DATABASE=postgres" \
@@ -45,10 +50,12 @@ Now that the datastore is ready, let';s start our first instance of Kong
     -p 8003:8003 \
     -p 8004:8004 \
     -p 8444:8444 \
-    kong-ee```
+    kong-ee
+```
 
 Assuming that started without an issues, let's start the second node:
-```docker run -d --name kong2 \
+```
+docker run -d --name kong2 \
     --link kong-database:kong-database \
     -e "KONG_LICENSE_DATA=$KONG_LICENSE_DATA" \
     -e "KONG_DATABASE=postgres" \
@@ -69,7 +76,8 @@ Assuming that started without an issues, let's start the second node:
     -p 9004:9004 \
     -p 9444:9444 \
     -p 9447:9447 \
-    kong-ee```
+    kong-ee
+```
 
 You'll notice this is pretty much the exact same as we did for node1, with the only difference being the port numbers. 
 
