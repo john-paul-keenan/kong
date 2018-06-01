@@ -127,7 +127,7 @@ A Route defines how a request will come into KONG. Typically, this is a request 
 	- hosts
 	- paths
 Let's go ahead and add a route. Take note that is being added as a route to a speific service:<br />
-`http POST :8001/services/ip/routes paths:='["/ip"]'`<>br />
+`http POST :8001/services/ip/routes paths:='["/ip"]'`<br />
 This will route any call made to one of the kong nodes at /ip. 
 
 Let's test both nodes:<br />
