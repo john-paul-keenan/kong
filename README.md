@@ -119,7 +119,7 @@ In previous versions of Kong, incomming and outgoing traffic was controlled by t
 A Service in Kong is where the request will be proxied to. This is typically a service you have somewhere upstream. Services can have a 1:1 or a 1:many relationship with routes, meaning 1 or more route can lead to the same service.
 
 We can add Services either through the GUI, or the commandline. if you prefer the commandline, you can run the following command to add your first service:<br />
-`http POST :8001/services host=httpbin.org name=ip path=/ip protocol=http`
+`http POST :8001/services host=httpbin.org name=ip path=/ip protocol=http`<br />
 This means any request that gets routed to this service will be routed to http://httobin.org/ip
 
 A Route defines how a request will come into KONG. Typically, this is a request to one of the APIs inside of Kong. Kong can identify a route based on any of the following:
@@ -127,7 +127,7 @@ A Route defines how a request will come into KONG. Typically, this is a request 
 	- hosts
 	- paths
 Let's go ahead and add a route. Take note that is being added as a route to a speific service:<br />
-`http POST :8001/services/ip/routes paths:='["/ip"]'`
+`http POST :8001/services/ip/routes paths:='["/ip"]'`<>br />
 This will route any call made to one of the kong nodes at /ip. 
 
 Let's test both nodes:<br />
