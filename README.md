@@ -87,9 +87,13 @@ With our 2 nodes up and running, let's take a look inside both of them. To go in
 And to go into the kong2:<br />
 `docker exec -it kong2 /bin/ash`
 
-If you remember, when we first started the Kong container, we assigned a lot of the Kong environmental variables. However, if we `cat etc/kong/kong.conf.default`, we’ll notice none of those changes seem to be reflected there. This is because we passed those new values through as environmental variables. Environmental variables are saved `/usr/local/kong/.kong_env` and are removed every time Kong is restarted. because part of this demo will require us to resatart Kong, let's update the actual file. We will only be doing this in kong2, but the same concepts can be repeated in every Kong node.
+If you remember, when we first started the Kong container, we assigned a lot of the Kong environmental variables. However, if we `cat etc/kong/kong.conf.default`, we’ll notice none of those changes seem to be reflected there. This is because we passed those new values through as environmental variables. Environmental variables are saved `/usr/local/kong/.kong_env` and are are auto generated every time kong starts. 
 
-First, change the name of the file to kong.conf This can be done with the following command:<br />
+### The next teps are not required because Kong remembers the values you have for the enviromental variables. We are changing them because this is a trainning excerise and this change will make parts of what we do later make more sense. 
+
+Let's update some values in the actual kong.conf file. 
+
+First, change the name of the file to kong.conf Otherwise, it will not be used. This can be done with the following command:<br />
 `mv etc/kong/kong.conf.default etc/kong/kong.conf`
 
 now that the file has the corrct name, let's open it with a text editor:<br />
