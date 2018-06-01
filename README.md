@@ -1,25 +1,23 @@
 # Before we start:
 ### Have the following installed on your local machine:
-	- Docker - https://docs.docker.com/install/
-	- httpie - https://httpie.org/
+* Docker - https://docs.docker.com/install/
+* httpie - https://httpie.org/
 ### Run the following commands on your machine locally:
-	- docker pull postgres:9.6
-	- docker pull kong-docker-kong-enterprise-edition-docker.bintray.io/kong-enterprise-edition:0.32-alpine
+* docker pull postgres:9.6
+* docker pull kong-docker-kong-enterprise-edition-docker.bintray.io/kong-enterprise-edition:0.32-alpine
 		(you will need access to get this)
-	- docker tag kong-docker-kong-enterprise-edition-docker.bintray.io/kong-enterprise-edition:0.32-alpine kong-ee
-	- export KONG_LICENSE_DATA='<licenseDataHere>'
+* docker tag kong-docker-kong-enterprise-edition-docker.bintray.io/kong-enterprise-edition:0.32-alpine kong-ee
+* export KONG_LICENSE_DATA='<licenseDataHere>'
 		(you will be provided with a licnese file to use. Because your company bname has a ' in it, please make sure to escape that charcter out first with a \)
 
 ## Getting Started
 Now, we have everything we need to follow along with the demo. We'll do theis part as a group, but first, we'll need to get the datastopre up and running. We'll be using Postgres in this example but could just as easily use Cassandra
 
-```
-docker run -d --name kong-database \
+```docker run -d --name kong-database \
               -p 5432:5432 \
               -e "POSTGRES_USER=kong" \
               -e "POSTGRES_DB=kong" \
-              postgres:9.6
-	      ```
+              postgres:9.6```
 
 Now that we have a daatastore up and ready, we need to run migrations on it. Migrations must be run when you start a fresh instance of Kong, or upgrade versions. Migrations should only be run from a single node
 ```docker run --rm --name kong \
@@ -30,8 +28,7 @@ Now that we have a daatastore up and ready, we need to run migrations on it. Mig
     kong-ee kong migrations up```
 
 Now that the datastore is ready, let';s start our first instance of Kong
-```
-docker run -d --name kong \
+```docker run -d --name kong \
     --link kong-database:kong-database \
     -e "KONG_LICENSE_DATA=$KONG_LICENSE_DATA" \
     -e "KONG_DATABASE=postgres" \
@@ -51,8 +48,7 @@ docker run -d --name kong \
     kong-ee```
 
 Assuming that started without an issues, let's start the second node:
-```
-docker run -d --name kong2 \
+```docker run -d --name kong2 \
     --link kong-database:kong-database \
     -e "KONG_LICENSE_DATA=$KONG_LICENSE_DATA" \
     -e "KONG_DATABASE=postgres" \
