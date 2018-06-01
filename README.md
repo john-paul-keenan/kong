@@ -89,7 +89,7 @@ And to go into the kong2:<br />
 
 If you remember, when we first started the Kong container, we assigned a lot of the Kong environmental variables. However, if we `cat etc/kong/kong.conf.default`, we’ll notice none of those changes seem to be reflected there. This is because we passed those new values through as environmental variables. Environmental variables are saved `/usr/local/kong/.kong_env` and are are auto generated every time kong starts. 
 
-### The next teps are not required because Kong remembers the values you have for the enviromental variables. We are changing them because this is a trainning excerise and this change will make parts of what we do later make more sense. 
+### The next steps are not required because Kong remembers the values you have for the enviromental variables. We are changing them because this is a trainning excerise and this change will make parts of what we do later make more sense. 
 
 Let's update some values in the actual kong.conf file. 
 
