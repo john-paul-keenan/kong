@@ -38,7 +38,6 @@ docker run -d --name kong \
     -e "KONG_LICENSE_DATA=$KONG_LICENSE_DATA" \
     -e "KONG_DATABASE=postgres" \
     -e "KONG_PG_HOST=kong-database" \
-    -e "KONG_ANONYMOUS_REPORTS=off" \
     -e "KONG_ADMIN_LISTEN=0.0.0.0:8001, 0.0.0.0:8444 ssl" \
     -e "KONG_VITALS=on" \
     -e "KONG_PORTAL=on" \
@@ -60,7 +59,6 @@ docker run -d --name kong2 \
     -e "KONG_LICENSE_DATA=$KONG_LICENSE_DATA" \
     -e "KONG_DATABASE=postgres" \
     -e "KONG_PG_HOST=kong-database" \
-    -e "KONG_ANONYMOUS_REPORTS=off" \
     -e "KONG_ADMIN_LISTEN=0.0.0.0:9001, 0.0.0.0:9444 ssl" \
     -e "KONG_ADMIN_GUI_LISTEN=0.0.0.0:9002, 0.0.0.0:9445 ssl" \
     -e "KONG_PROXY_LISTEN=0.0.0.0:9000, 0.0.0.0:9443 ssl" \
@@ -101,11 +99,9 @@ now that the file has the corrct name, let's open it with a text editor:<br />
 
 
 Find the following values and update them:<br />
-	`anonymous_reports`<br />
 	`proxy_listen`<br />
 	`admin_listen`<br />
 	`admin_gui_listen`<br />
-	`vitals`<br />
 	`portal`<br />
 	`portal_gui_listen`<br />
 	`portal_api_listen`<br />
