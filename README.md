@@ -40,7 +40,6 @@ docker run -d --name kong \
     -e "KONG_PG_HOST=kong-database" \
     -e "KONG_ADMIN_LISTEN=0.0.0.0:8001, 0.0.0.0:8444 ssl" \
     -e "KONG_VITALS=on" \
-    -e "KONG_PORTAL=on" \
     -p 8000:8000 \
     -p 8443:8443 \
     -p 8445:8445 \
@@ -62,9 +61,7 @@ docker run -d --name kong2 \
     -e "KONG_ADMIN_LISTEN=0.0.0.0:9001, 0.0.0.0:9444 ssl" \
     -e "KONG_ADMIN_GUI_LISTEN=0.0.0.0:9002, 0.0.0.0:9445 ssl" \
     -e "KONG_PROXY_LISTEN=0.0.0.0:9000, 0.0.0.0:9443 ssl" \
-    -e "KONG_PORTAL_API_LISTEN=0.0.0.0:9004, 0.0.0.0:9447 ssl" \
     -e "KONG_VITALS=on" \
-    -e "KONG_PORTAL=on" \
     -p 9000:9000 \
     -p 9443:9443 \
     -p 9445:9445 \
@@ -102,9 +99,7 @@ Find the following values and update them:<br />
 	`proxy_listen`<br />
 	`admin_listen`<br />
 	`admin_gui_listen`<br />
-	`portal`<br />
-	`portal_gui_listen`<br />
-	`portal_api_listen`<br />
+
 
 Once they have all been updated, stop Kong with:
 `kong stop`
