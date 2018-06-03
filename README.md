@@ -122,7 +122,8 @@ A Route defines how a request will come into KONG. Typically, this is a request 
 	- hosts
 	- paths
 Let's go ahead and add a route. Take note that is being added as a route to a speific service:<br />
-`http POST :8001/services/ip/routes paths:='["/"]'`<br />
+`http POST :8001/services/ip/routes paths:='["/.*"]'`<br />
+<cite>Note the `/.*` this is regext that will accept any value</cite>
 
 This will route any call made to the Kong node's root. In this case, that is localhost:8000/<anything> or localhost:9000/<anything>
 
@@ -131,6 +132,37 @@ Let's test both nodes:<br />
 `http :9000/test`
 
 Both of those should have returned your machine's local IP address. 
+
+### Now, we'll add a second route, inside of the original route.
+
+Endpoints inside of the API can be added as new routes. This gives you the ability to apply plugins to spefic endpoints. 
+
+Maybe you are having a sale on some products, and need to restrict the amount of traffic there. Let's add a route inside of our API to the endpoint with a sale, and apply some rate limiting on it. This will ensure our end users all have an equal chance to access our sale, as well as protect our backend service from getting to heaily trafficed. 
+
+First, simply add the new route:
+```
+http POST :8001/services/ip/routes \
+ paths:='["/sale"]'
+ ```
+
+Now, let's add the EE Rate limiting plugin to that endpoint only. You can read the details about all of the configuration paramaters in the [Rate Limiting Advanced Plugin Documentation](https://getkong.org/docs/enterprise/0.32-x/plugins/rate-limiting-advanced/)
+```
+http POST :8001/routes/<routeID>/plugins \
+    name=rate-limiting-advanced \
+    config.dictionary_name=kong_rate_limiting_counters \
+    config.identifier=ip \
+    config.limit=5 \
+    config.strategy=cluster \
+    config.sync_rate=0 \
+    config.window_size=120 \
+    config.window_type=sliding
+    ```
+
+Now, let's test that endpoint. Run this command 6 times, and take note of the response on the sixth attempt:<br />
+`http :8000/sale`
+
+Note that you received a 429 error on your sixth attempt.
+
 
 # TODO
 	- add a second service and rate limiting to show the value in this
