@@ -51,16 +51,13 @@ docker run -d --name kong \
     kong-ee
 ```
 
-Assuming that started without an issues, let's start the second node:
+Assuming that started without an issues, let's start the second node. Note I have removed `admin_listen` from the enviromental variables in this command. The enviromental variables set in this command get rewritten everytime the container is restarted and in this example, that is not desirable :
 ```
 docker run -d --name kong2 \
     --link kong-database:kong-database \
     -e "KONG_LICENSE_DATA=$KONG_LICENSE_DATA" \
     -e "KONG_DATABASE=postgres" \
     -e "KONG_PG_HOST=kong-database" \
-    -e "KONG_ADMIN_LISTEN=0.0.0.0:9001, 0.0.0.0:9444 ssl" \
-    -e "KONG_ADMIN_GUI_LISTEN=0.0.0.0:9002, 0.0.0.0:9445 ssl" \
-    -e "KONG_PROXY_LISTEN=0.0.0.0:9000, 0.0.0.0:9443 ssl" \
     -e "KONG_VITALS=on" \
     -p 9000:9000 \
     -p 9443:9443 \
