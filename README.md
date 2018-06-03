@@ -156,7 +156,7 @@ http POST :8001/routes/<routeID>/plugins \
     config.sync_rate=0 \
     config.window_size=120 \
     config.window_type=sliding
-    ```
+```
 
 Now, let's test that endpoint. Run this command 6 times, and take note of the response on the sixth attempt:<br />
 `http :8000/sale`
