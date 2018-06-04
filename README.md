@@ -160,7 +160,43 @@ Now, let's test that endpoint. Run this command 6 times, and take note of the re
 
 Note that you received a 429 error on your sixth attempt.
 
+## Seperating the Data Plane and Admin Plane
 
-# TODO
-	- add a second service and rate limiting to show the value in this
-	- add separation of data/admin planes 
+In this part of the trainning, we will turn our kong2 node first into a data only node, then into an admin only node.
+
+### Creating a Data only Node
+
+In your kong2 node, open kong.conf in a text editor<br />
+`vi etc/kong/kong.conf`<br />
+
+Find the value `admin_listen` and set its value to:
+```
+admin_listen = off
+```
+ Save the file and restart Kong.
+```
+kong stop
+docker start kong2
+```
+
+Making a request to `:9000/anything` will still work, however, attempting to call `:9001/` will now fail. <br />
+You should also check the Kong GUI to see an error
+
+### Creating an Admin only Node
+In your kong2 node, open kong.conf in a text editor<br />
+`vi etc/kong/kong.conf`<br />
+
+We will be making 2 changes to the file. First, turning the admin plane back on which we turned off in the last step. Second, we will turn off the traffic side
+```
+admin_listen = 0.0.0.0:9001
+proxy_listen = off
+```
+
+Save the file and restart Kong.
+```
+kong stop
+docker start kong2
+```
+Making a request to `:9000/anything` will fail, however, attempting to call `:9001/` will now wprk. <br />
+You should also check the Kong GUI and succesfully be able to add administrative actions to Kong.
+
