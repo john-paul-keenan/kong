@@ -31,7 +31,7 @@ docker run --rm --name kong \
     kong-ee kong migrations up
 ```
 
-Now that the datastore is ready, let';s start our first instance of Kong
+Now that the datastore is ready, let's start our first instance of Kong
 ```
 docker run -d --name kong \
     --link kong-database:kong-database \
@@ -51,7 +51,7 @@ docker run -d --name kong \
     kong-ee
 ```
 
-Assuming that started without an issues, let's start the second node. Note I have removed `admin_listen` from the enviromental variables in this command. The enviromental variables set in this command get rewritten everytime the container is restarted and in this example, that is not desirable :
+Assuming that started without an issue, let's start the second node. Note I have removed `admin_listen` from the enviromental variables in this command. The enviromental variables set in this command get rewritten everytime the container is restarted and in this example, that is not desirable :
 ```
 docker run -d --name kong2 \
     --link kong-database:kong-database \
@@ -160,9 +160,9 @@ Now, let's test that endpoint. Run this command 6 times, and take note of the re
 
 Note that you received a 429 error on your sixth attempt.
 
-## Seperating the Data Plane and Admin Plane
+## Separating the Data Plane and Admin Plane
 
-In this part of the trainning, we will turn our kong2 node first into a data only node, then into an admin only node.
+In this part of the training, we will turn our kong2 node first into a data only node, then into an admin only node.
 
 ### Creating a Data only Node
 
@@ -197,6 +197,6 @@ Save the file and restart Kong.
 kong stop
 docker start kong2
 ```
-Making a request to `:9000/anything` will fail, however, attempting to call `:9001/` will now wprk. <br />
+Making a request to `:9000/anything` will fail, however, attempting to call `:9001/` will now work. <br />
 You should also check the Kong GUI and succesfully be able to add administrative actions to Kong.
 
