@@ -1,0 +1,82 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:9.5
+    restart: always
+    container_name: kong-ee-postgres
+    networks:
+      - kong-ee
+    environment:
+      - POSTGRES_USER=kong
+      - POSTGRES_DB=kong
+    ports:
+      - 5432:5432
+      - 5433:5433
+
+  redis:
+    image: redis:3
+    restart: always
+    container_name: kong-ee-redis
+    networks:
+      - kong-ee
+
+  kong-ee:
+    image: jpksf/kong:32
+    container_name: kong
+    networks:
+      - kong-ee
+    depends_on:
+      - redis
+      - postgres
+    restart: always
+    ports:
+      - 8000:8000
+      - 8001:8001
+      - 8002:8002
+      - 8003:8003
+      - 8004:8004
+      - 8443:8443
+      - 8444:8444
+      - 8445:8445
+      - 8447:8447
+    command: "kong start --run-migrations"
+    environment:
+      - KONG_DATABASE=postgres
+      - KONG_PG_HOST=kong-ee-postgres
+      - KONG_ADMIN_LISTEN=0.0.0.0:8001
+      - KONG_VITALS=on
+      - KONG_PORTAL=on
+      - KONG_ANONYMOUS_REPORTS=off
+
+  kong-ee2:
+    image: jpksf/kong:32
+    container_name: kong2
+    networks:
+      - kong-ee
+    depends_on:
+      - redis
+      - postgres
+    restart: always
+    ports:
+      - 9000:9000
+      - 9001:9001
+      - 9002:9002
+      - 9003:9003
+      - 9004:9004
+      - 9443:9443
+      - 9444:9444
+      - 9445:9445
+      - 9447:9447
+    command: "kong start"
+    environment:
+      - KONG_DATABASE=postgres
+      - KONG_PG_HOST=kong-ee-postgres
+      - KONG_VITALS=on
+      - KONG_PORTAL=on
+      - KONG_ANONYMOUS_REPORTS=off
+
+
+
+networks:
+  kong-ee:
