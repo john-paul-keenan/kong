@@ -4,16 +4,20 @@
 * httpie - https://httpie.org/
 ### Run the following commands on your machine locally:
 * First, we will pull a copy of the Postgres Image<br />
-`docker pull postgres:9.6`
-* Next, pull a copy of Kong Enterprise Edition. You will need credentials to access this image, so please contact your CSE if you have images. 
-`docker pull kong-docker-kong-enterprise-edition-docker.bintray.io/kong-enterprise-edition:0.32-alpine`
+`docker pull postgres:9.6`<br />
+* Next, pull a copy of Kong Enterprise Edition. You will need credentials to access this image, so please contact your CSE if you have images.<br /> 
+`docker pull kong-docker-kong-enterprise-edition-docker.bintray.io/kong-enterprise-edition:0.32-alpine`<br />
 * Because that is a rather long image name, tag it to something more managable<br />
-`docker tag kong-docker-kong-enterprise-edition-docker.bintray.io/kong-enterprise-edition:0.32-alpine kong-ee`
-* Finally, we'll create an enviromental variable for the license file. Please note, there are 2 examples of this, the first is if your company name does not contain any special charcters (for example, a ! or '). The second example comments out special charcters to allow special charcters<br>
-<cite>no special charcters</cite>
-`export KONG_LICENSE_DATA='{"license":{"signature":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx","payload":{"customer":"Example Company","license_creation_date":"2018-05-31","product_subscription":"Kong Enterprise Edition","admin_seats":"5","support_plan":"Platinum","license_expiration_date":"2018-06-14","license_key":"xxxxxxxxxxxxxxxxxx_xxxxxxxxxxxxxxxxxxx"},"version":1}}'`
-<cite>using special charcters</cite>
-`export KONG_LICENSE_DATA="{\"license\":{\"signature\":\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\",\"payload\":{\"customer\":\"JPK's Exmple Company\",\"license_creation_date\":\"2018-05-30\",\"product_subscription\":\"Kong Enterprise Edition\",\"admin_seats\":\"5\",\"support_plan\":\"Platinum\",\"license_expiration_date\":\"2018-06-14\",\"license_key\":\"xxxxxxxxxxxxxxxxxx_xxxxxxxxxxxxxxxxxxx\"},\"version\":1}}"`
+`docker tag kong-docker-kong-enterprise-edition-docker.bintray.io/kong-enterprise-edition:0.32-alpine kong-ee` <br />
+* Finally, we'll create an enviromental variable for the license file. Please note, there are 2 examples of this, the first is if your company name does not contain any special charcters (for example, a ! or '). The second example comments out special charcters to allow special charcters<br />
+##### no special charcters
+```
+export KONG_LICENSE_DATA='{"license":{"signature":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx","payload":{"customer":"Example Company","license_creation_date":"2018-05-31","product_subscription":"Kong Enterprise Edition","admin_seats":"5","support_plan":"Platinum","license_expiration_date":"2018-06-14","license_key":"xxxxxxxxxxxxxxxxxx_xxxxxxxxxxxxxxxxxxx"},"version":1}}'
+```
+##### using special charcters
+```
+export KONG_LICENSE_DATA="{\"license\":{\"signature\":\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\",\"payload\":{\"customer\":\"JPK's Exmple Company\",\"license_creation_date\":\"2018-05-30\",\"product_subscription\":\"Kong Enterprise Edition\",\"admin_seats\":\"5\",\"support_plan\":\"Platinum\",\"license_expiration_date\":\"2018-06-14\",\"license_key\":\"xxxxxxxxxxxxxxxxxx_xxxxxxxxxxxxxxxxxxx\"},\"version\":1}}"
+```
 
 ## Getting Started
 Now, we have everything we need to follow along with the demo. We'll do theis part as a group, but first, we'll need to get the datastopre up and running. We'll be using Postgres in this example but could just as easily use Cassandra
