@@ -3,12 +3,17 @@
 * Docker - https://docs.docker.com/install/
 * httpie - https://httpie.org/
 ### Run the following commands on your machine locally:
-* docker pull postgres:9.6
-* docker pull kong-docker-kong-enterprise-edition-docker.bintray.io/kong-enterprise-edition:0.32-alpine
-		(you will need access to get this)
-* docker tag kong-docker-kong-enterprise-edition-docker.bintray.io/kong-enterprise-edition:0.32-alpine kong-ee
-* export KONG_LICENSE_DATA='<licenseDataHere>'
-		(you will be provided with a licnese file to use. Because your company bname has a ' in it, please make sure to escape that charcter out first with a \)
+* First, we will pull a copy of the Postgres Image<br />
+`docker pull postgres:9.6`
+* Next, pull a copy of Kong Enterprise Edition. You will need credentials to access this image, so please contact your CSE if you have images. 
+`docker pull kong-docker-kong-enterprise-edition-docker.bintray.io/kong-enterprise-edition:0.32-alpine`
+* Because that is a rather long image name, tag it to something more managable<br />
+`docker tag kong-docker-kong-enterprise-edition-docker.bintray.io/kong-enterprise-edition:0.32-alpine kong-ee`
+* Finally, we'll create an enviromental variable for the license file. Please note, there are 2 examples of this, the first is if your company name does not contain any special charcters (for example, a ! or '). The second example comments out special charcters to allow special charcters<br>
+<cite>no special charcters</cite>
+`export KONG_LICENSE_DATA='{"license":{"signature":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx","payload":{"customer":"Example Company","license_creation_date":"2018-05-31","product_subscription":"Kong Enterprise Edition","admin_seats":"5","support_plan":"Platinum","license_expiration_date":"2018-06-14","license_key":"xxxxxxxxxxxxxxxxxx_xxxxxxxxxxxxxxxxxxx"},"version":1}}'`
+<cite>using special charcters</cite>
+`export KONG_LICENSE_DATA="{\"license\":{\"signature\":\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\",\"payload\":{\"customer\":\"JPK's Exmple Company\",\"license_creation_date\":\"2018-05-30\",\"product_subscription\":\"Kong Enterprise Edition\",\"admin_seats\":\"5\",\"support_plan\":\"Platinum\",\"license_expiration_date\":\"2018-06-14\",\"license_key\":\"xxxxxxxxxxxxxxxxxx_xxxxxxxxxxxxxxxxxxx\"},\"version\":1}}"`
 
 ## Getting Started
 Now, we have everything we need to follow along with the demo. We'll do theis part as a group, but first, we'll need to get the datastopre up and running. We'll be using Postgres in this example but could just as easily use Cassandra
@@ -93,9 +98,9 @@ now that the file has the corrct name, let's open it with a text editor:<br />
 
 
 Find the following values and update them:<br />
-	`proxy_listen`<br />
-	`admin_listen`<br />
-	`admin_gui_listen`<br />
+    `proxy_listen`<br />
+    `admin_listen`<br />
+    `admin_gui_listen`<br />
 
 
 Once they have all been updated, stop Kong with:
@@ -115,9 +120,9 @@ We can add Services either through the GUI, or the commandline. if you prefer th
 This means any request that gets routed to this service will be routed to http://httobin.org/ip
 
 A Route defines how a request will come into KONG. Typically, this is a request to one of the APIs inside of Kong. Kong can identify a route based on any of the following:
-	- methoods
-	- hosts
-	- paths
+    - methoods
+    - hosts
+    - paths
 Let's go ahead and add a route. Take note that is being added as a route to a speific service:<br />
 `http POST :8001/services/ip/routes paths:='["/.*"]'`<br />
 <cite>Note the `/.*` this is regext that will accept any value</cite>
