@@ -9,7 +9,7 @@
 `docker pull kong-docker-kong-enterprise-edition-docker.bintray.io/kong-enterprise-edition:0.32-alpine`<br />
 * Because that is a rather long image name, tag it to something more managable<br />
 `docker tag kong-docker-kong-enterprise-edition-docker.bintray.io/kong-enterprise-edition:0.32-alpine kong-ee` <br />
-* Finally, we'll create an enviromental variable for the license file. Please note, there are 2 examples of this, the first is if your company name does not contain any special charcters (for example, a ! or '). The second example comments out special charcters to allow special charcters<br />
+* Finally, we'll create an enviromental variable for the license file. Please note, there are 2 examples of this, the first is if your company name does not contain any special charcters (for example, ! or '). The second example comments out special charcters to allow special charcters<br />
 ##### no special charcters
 ```
 export KONG_LICENSE_DATA='{"license":{"signature":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx","payload":{"customer":"Example Company","license_creation_date":"2018-05-31","product_subscription":"Kong Enterprise Edition","admin_seats":"5","support_plan":"Platinum","license_expiration_date":"2018-06-14","license_key":"xxxxxxxxxxxxxxxxxx_xxxxxxxxxxxxxxxxxxx"},"version":1}}'
