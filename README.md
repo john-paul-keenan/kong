@@ -111,7 +111,7 @@ Once they have all been updated, stop Kong with:
 `kong stop`
 
 This will styop Kong and put you back on your local machine. To start Kong again, just tell docker to start the container:
-`docker start kong`
+`docker start kong2`
 
 ## Adding Routes and Services
 
