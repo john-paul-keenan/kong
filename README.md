@@ -67,7 +67,7 @@ docker run -d --name kong2 \
     -e "KONG_DATABASE=postgres" \
     -e "KONG_ADMIN_LISTEN=0.0.0.0:9001, 0.0.0.0:9444 ssl" \
     -e "KONG_PROXY_LISTEN=0.0.0.0:9000, 0.0.0.0:9443 ssl" \
-    -e "KONG_ADMIN_GUI_LISTEN=0.0.0.0:9002, 0.0.0.0:9445 ssl \"
+    -e "KONG_ADMIN_GUI_LISTEN=0.0.0.0:9002, 0.0.0.0:9445 ssl" \
     -e "KONG_PG_HOST=kong-database" \
     -e "KONG_VITALS=on" \
     -p 9000:9000 \
