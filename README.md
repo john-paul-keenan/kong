@@ -47,7 +47,6 @@ docker run -d --name kong \
     -e "KONG_LICENSE_DATA=$KONG_LICENSE_DATA" \
     -e "KONG_DATABASE=postgres" \
     -e "KONG_PG_HOST=kong-database" \
-    -e "KONG_ADMIN_LISTEN=0.0.0.0:8001, 0.0.0.0:8444 ssl" \
     -e "KONG_VITALS=on" \
     -p 8000:8000 \
     -p 8443:8443 \
@@ -60,12 +59,13 @@ docker run -d --name kong \
     kong-ee
 ```
 
-Assuming that started without an issue, let's start the second node. Note I have removed `admin_listen` from the enviromental variables in this command. The enviromental variables set in this command get rewritten everytime the container is restarted and in this example, that is not desirable :
+Assuming that started without an issue, let's start the second node. Note I added `admin_listen` to the enviromental variables in this command. The enviromental variables set in this command get rewritten everytime the container is restarted and for easeier demoing, I'm only stting it once :
 ```
 docker run -d --name kong2 \
     --link kong-database:kong-database \
     -e "KONG_LICENSE_DATA=$KONG_LICENSE_DATA" \
     -e "KONG_DATABASE=postgres" \
+    -e "KONG_ADMIN_LISTEN=0.0.0.0:9001, 0.0.0.0:9444 ssl" \
     -e "KONG_PG_HOST=kong-database" \
     -e "KONG_VITALS=on" \
     -p 9000:9000 \
@@ -80,13 +80,9 @@ docker run -d --name kong2 \
     kong-ee
 ```
 
-You'll notice this is pretty much the exact same as we did for node1, with the only difference being the port numbers. 
-
-With our 2 nodes up and running, let's take a look inside both of them. To go into kong:
+With our 2 nodes up and running, let's take a look inside both of them. To go into kong:<br />
 `docker exec -it kong /bin/ash`
 
-And to go into the kong2:<br />
-`docker exec -it kong2 /bin/ash`
 
 If you remember, when we first started the Kong container, we assigned a lot of the Kong environmental variables. However, if we `cat etc/kong/kong.conf.default`, we’ll notice none of those changes seem to be reflected there. This is because we passed those new values through as environmental variables. Environmental variables are saved `/usr/local/kong/.kong_env` and are are auto generated every time kong starts. 
 
@@ -102,16 +98,14 @@ now that the file has the corrct name, let's open it with a text editor:<br />
 
 
 Find the following values and update them:<br />
-    `proxy_listen`<br />
     `admin_listen`<br />
-    `admin_gui_listen`<br />
-
+    
 
 Once they have all been updated, stop Kong with:
 `kong stop`
 
 This will styop Kong and put you back on your local machine. To start Kong again, just tell docker to start the container:
-`docker start kong2`
+`docker start kong`
 
 ## Adding Routes and Services
 
@@ -171,11 +165,11 @@ Note that you received a 429 error on your sixth attempt.
 
 ## Separating the Data Plane and Admin Plane
 
-In this part of the training, we will turn our kong2 node first into a data only node, then into an admin only node.
+In this part of the training, we will turn our kong node first into a data only node, then into an admin only node.
 
 ### Creating a Data only Node
 
-In your kong2 node, open kong.conf in a text editor<br />
+In your kong node, open kong.conf in a text editor<br />
 `vi etc/kong/kong.conf`<br />
 
 Find the value `admin_listen` and set its value to:
@@ -185,14 +179,14 @@ admin_listen = off
  Save the file and restart Kong.
 ```
 kong stop
-docker start kong2
+docker start kong
 ```
 
-Making a request to `:9000/anything` will still work, however, attempting to call `:9001/` will now fail. <br />
+Making a request to `:8000/anything` will still work, however, attempting to call `:8001/` will now fail. <br />
 You should also check the Kong GUI to see an error
 
 ### Creating an Admin only Node
-In your kong2 node, open kong.conf in a text editor<br />
+In your kong node, open kong.conf in a text editor<br />
 `vi etc/kong/kong.conf`<br />
 
 We will be making 2 changes to the file. First, turning the admin plane back on which we turned off in the last step. Second, we will turn off the traffic side
@@ -204,8 +198,8 @@ proxy_listen = off
 Save the file and restart Kong.
 ```
 kong stop
-docker start kong2
+docker start kong
 ```
-Making a request to `:9000/anything` will fail, however, attempting to call `:9001/` will now work. <br />
+Making a request to `:8000/anything` will fail, however, attempting to call `:8001/` will now work. <br />
 You should also check the Kong GUI and succesfully be able to add administrative actions to Kong.
 
