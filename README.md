@@ -99,8 +99,9 @@ now that the file has the corrct name, let's open it with a text editor:<br />
 `vi etc/kong/kong.conf`
 
 
-Find the following values and update them:<br />
-    `admin_listen`<br />
+Find the following value and update it as needed fir your system:<br />
+    `admin_listen = 0.0.0.0:8001, 0.0.0.0:8444 ssl`<br />
+** For security, the Admin API listens on 127.0.0.1 by default. For the demo, we'll update this to 0.0.0.0    
     
 
 Once they have all been updated, stop Kong with:
