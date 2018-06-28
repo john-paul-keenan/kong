@@ -59,13 +59,15 @@ docker run -d --name kong \
     kong-ee
 ```
 
-Assuming that started without an issue, let's start the second node. Note I added `admin_listen` to the enviromental variables in this command. The enviromental variables set in this command get rewritten everytime the container is restarted and for easeier demoing, I'm only stting it once :
+Assuming that started without an issue, let's start the second node. Note I added `admin_listen`, `proxy_listen` and `admin_gui_listen` to the enviromental variables in this command. I am changing these from the default, 8000, range The enviromental variables set in this command get rewritten everytime the container is restarted and for easeier demoing, I'm only stting it once :
 ```
 docker run -d --name kong2 \
     --link kong-database:kong-database \
     -e "KONG_LICENSE_DATA=$KONG_LICENSE_DATA" \
     -e "KONG_DATABASE=postgres" \
     -e "KONG_ADMIN_LISTEN=0.0.0.0:9001, 0.0.0.0:9444 ssl" \
+    -e "KONG_PROXY_LISTEN=0.0.0.0:9000, 0.0.0.0:9443 ssl" \
+    -e "KONG_ADMIN_GUI_LISTEN=0.0.0.0:9002, 0.0.0.0:9445 ssl \"
     -e "KONG_PG_HOST=kong-database" \
     -e "KONG_VITALS=on" \
     -p 9000:9000 \
