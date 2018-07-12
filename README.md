@@ -128,7 +128,7 @@ Let's go ahead and add a route. Take note that is being added as a route to a sp
 `http POST :8001/services/ip/routes paths:='["/t/.*"]'`<br />
 <cite>Note the `/.*` this is regext that will accept any value</cite>
 
-This will route any call made to the Kong node's root. In this case, that is localhost:8000/<anything> or localhost:9000/<anything>
+This will route any call made to the Kong node's root /t. In this case, that is localhost:8000/t/<anything> or localhost:9000/t/<anything>
 
 Let's test both nodes:<br />
 `http :8000/`<br />
