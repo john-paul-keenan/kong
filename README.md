@@ -185,7 +185,7 @@ kong stop
 docker start kong
 ```
 
-Making a request to `:8000/anything` will still work, however, attempting to call `:8001/` will now fail. <br />
+Making a request to `:8000/t/anything` will still work, however, attempting to call `:8001/` will now fail. <br />
 You should also check the Kong GUI to see an error
 
 ### Creating an Admin only Node
